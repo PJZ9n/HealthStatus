@@ -44,27 +44,6 @@ class Main extends PluginBase implements Listener {
         $this->setTitle($player);
     }
 
-    public function Respawn(PlayerRespawnEvent $event){
-        $player = $event->getPlayer();
-        $this->setTitle($player);
-    }
-
-    public function optionbow(EntityDamageEvent $event){
-        $entity = $event->getEntity();
-        if($entity instanceof Player){
-            //$entityがプレイヤーインスタンスだったら
-            $this->setTitle($entity);
-        }
-    }
-
-    public function RegainHealth(EntityRegainHealthEvent $event){
-        $entity = $event->getEntity();
-        if($entity instanceof Player){
-            //$entityがプレイヤーインスタンスだったら
-            $this->setTitle($entity);
-        }
-    }
-
     public function setTitle(Player $player){
         $name = $player->getName();
         $health = $player->getHealth();
