@@ -22,11 +22,12 @@ class Main extends PluginBase implements Listener {
 	public function onEnable(){
         $this->getServer()->getLogger()->info("[HealthStatus]読み込み完了v1.1.0_by.xtakumatutix");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-
+        
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
-            'フォーマット' => '{name}\n§c[❤{nowhealth}/{maxhealth}]',
-            'フォーマットの説明' => '{name} = 名前, {nowhealth} = 現在の体力, {maxhealth} = 最大体力',//本当はresources使ってコメント入れたいところですが難しいので
-         )); // ここのコードはPJZ9nさんに教えてもらいましたサンクス！！
+            '現在の体力の前' => '§c[❤',
+            '現在の体力と最大体力の間' => '/',
+            '最大体力の後ろ' => ']',
+        )); // ここのコードはPJZ9nさんに教えてもらいましたサンクス！！
         
         $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(
             function (int $currentTick): void{
@@ -43,18 +44,16 @@ class Main extends PluginBase implements Listener {
     	$player = $event->getPlayer();
         $this->setTitle($player);
     }
-
+    
     public function setTitle(Player $player){
-        $name = $player->getName();
-        $health = $player->getHealth();
-        $maxHealth = $player->getMaxHealth();
-        $format = $this->config->get("フォーマット");
-        
-        //別のやり方もありますが可読性優先
-        $format = str_replace("{name}", $name, $format);//{name}を$nameの内容に置き換え
-        $format = str_replace("{nowhealth}", $health, $format);//{nowhealth}を$healthの内容に置き換え
-        $format = str_replace("{maxhealth}", $maxHealth, $format);//{maxhealth}を$maxHealthの内容に置き換え
-        
-        $player->setNameTag($format);
+        $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
+        $name =$player->getName();
+        $health =$player->getHealth();
+        $maxHealth =$player->getMaxHealth();
+        $config =$this->config->get("現在の体力の前");
+        $config2 =$this->config->get("現在の体力と最大体力の間");
+        $config3 =$this->config->get("最大体力の後ろ");
+        $player->setNameTag($name."\n".$config."".$health."".$config2."".$maxHealth."".$config3."");
     }
+
 }
