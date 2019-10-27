@@ -9,13 +9,13 @@ use pocketmine\utils\Config; //ここまで必須
 
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerRespawnEvent;
-use pocketmine\event\player\PlayerMoveEvent;
+//use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent; //ステータス更新に必要なイベント
 
 class Main extends PluginBase implements Listener {
 
-    /** @ver $config*/
+    /** @var Config */ //修正
     private $config;
 
 	public function onEnable(){
@@ -30,37 +30,38 @@ class Main extends PluginBase implements Listener {
     }
 
     public function Onjoin(PlayerJoinEvent $event){
-    	$player =$event->getPlayer(); 
+    	$player = $event->getPlayer();
         $this->setTitle($player);
     }
 
     public function Respawn(PlayerRespawnEvent $event){
-        $player =$event->getPlayer(); 
+        $player = $event->getPlayer();
         $this->setTitle($player);
     }
 
     public function optionbow(EntityDamageEvent $event){
         $entity = $event->getEntity();
         if($entity instanceof Player){
+            //$entityがプレイヤーインスタンスだったら
+            $this->setTitle($entity);
         }
-        $this->setTitle($entity);
     }
 
     public function RegainHealth(EntityRegainHealthEvent $event){
         $entity = $event->getEntity();
         if($entity instanceof Player){
+            //$entityがプレイヤーインスタンスだったら
+            $this->setTitle($entity);
         }
-        $this->setTitle($entity);
     }
 
     public function setTitle(Player $player){
-        $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-        $name =$player->getName();
-        $health =$player->getHealth();
-        $maxHealth =$player->getMaxHealth();
-        $config =$this->config->get("現在の体力の前");
-        $config2 =$this->config->get("現在の体力と最大体力の間");
-        $config3 =$this->config->get("最大体力の後ろ");
+        $name = $player->getName();
+        $health = $player->getHealth();
+        $maxHealth = $player->getMaxHealth();
+        $config = $this->config->get("現在の体力の前");
+        $config2 = $this->config->get("現在の体力と最大体力の間");
+        $config3 = $this->config->get("最大体力の後ろ");
         $player->setNameTag($name."\n".$config."".$health."".$config2."".$maxHealth."".$config3."");
     }
 }
