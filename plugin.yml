@@ -1,8 +1,10 @@
 name: HealthStatus
 main: xtakumatutix\HealthStatus\Main
-version: 1.0.6
+version: 1.1.0
 description: 相手の体力を表示します
 api: 3.0.0
 load: POSTWORLD
 author: xtakumatutix
+authors:
+  - PJZ9n
 website: https://www.takumatuti.tk
