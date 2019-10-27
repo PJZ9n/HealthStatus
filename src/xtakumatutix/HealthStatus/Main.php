@@ -20,7 +20,7 @@ class Main extends PluginBase implements Listener {
     private $config;
 
 	public function onEnable(){
-        $this->getServer()->getLogger()->info("[HealthStatus]読み込み完了v1.0.6_by.xtakumatutix");
+        $this->getServer()->getLogger()->info("[HealthStatus]読み込み完了v1.1.0_by.xtakumatutix");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
