@@ -9,10 +9,6 @@ use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Config; //ここまで必須
 
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\player\PlayerRespawnEvent;
-//use pocketmine\event\player\PlayerMoveEvent;
-use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\entity\EntityRegainHealthEvent; //ステータス更新に必要なイベント
 
 class Main extends PluginBase implements Listener {
 
