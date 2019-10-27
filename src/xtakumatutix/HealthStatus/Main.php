@@ -5,6 +5,7 @@ namespace xtakumatutix\HealthStatus;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\event\Listener;
+use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Config; //ここまで必須
 
 use pocketmine\event\player\PlayerJoinEvent;
@@ -23,10 +24,20 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
-        '現在の体力の前' => '§c[❤',
-        '現在の体力と最大体力の間' => '/',
-        '最大体力の後ろ' => ']',
-       )); // ここのコードはPJZ9nさんに教えてもらいましたサンクス！！
+            '現在の体力の前' => '§c[❤',
+            '現在の体力と最大体力の間' => '/',
+            '最大体力の後ろ' => ']',
+         )); // ここのコードはPJZ9nさんに教えてもらいましたサンクス！！
+        
+        $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(
+            function (int $currentTick): void{
+                //処理開始
+                //全てのオンラインプレイヤーに対してsetTitleする
+                foreach ($this->getServer()->getOnlinePlayers() as $player) {
+                    $this->setTitle($player);
+                }
+            }
+        ), 20);//20Tick(1秒)おきに。
     }
 
     public function Onjoin(PlayerJoinEvent $event){
